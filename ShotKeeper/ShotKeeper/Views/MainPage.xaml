@@ -5,7 +5,87 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ShotKeeper.Views.MainPage"
              Title="MainPage">
-  <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-    <Label Text="{Binding Title}" />
-  </StackLayout>
-</ContentPage>
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="plainButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#eee"/>
+        <Setter Property="TextColor" Value="Black" />
+        <Setter Property="BorderRadius" Value="0"/>
+        <Setter Property="FontSize" Value="40" />
+      </Style>
+      <Style x:Key="plainLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="VerticalOptions" Value="LayoutOptions.Center" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <ScrollView>
+      <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Total Shooting Percentage -->
+        <StackLayout Grid.Row="0" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="ValueTotalShootingPercentage" Style="{StaticResource plainLabel}" Text="{Binding ValueTotalShooting}"/>
+        </StackLayout>
+        <StackLayout Grid.Row="1" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="LBLTotalShootingPercentage"   Style="{StaticResource plainLabel}" Text="Total Shooting Percentage"/>
+        </StackLayout>
+
+        <!-- Add buttons -->
+        <Button x:Name="AddShotCountedFreeThrow"    Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="0"/>
+        <Button x:Name="AddShotMissedFreeThrow"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="AddShotCountedMidRange"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="2"/>
+        <Button x:Name="AddShotMissedMidRange"      Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="3"/>
+        <Button x:Name="AddShotCountedThreePointer" Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="4"/>
+        <Button x:Name="AddShotMissedThreePointer"  Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="5"/>
+
+        <!-- Percentage Labels -->
+        <StackLayout  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="ValueFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueFreeThrow}"/>
+        </StackLayout>
+        <StackLayout Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="ValueMidRangePercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueMidRange}"/>
+        </StackLayout>
+        <StackLayout Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="ValueThreePointerPercentage" Style="{StaticResource plainLabel}" Text="{Binding ValueThreePointers}"/>
+        </StackLayout>
+
+        <StackLayout  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="LabelFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="Free Throws"/>
+        </StackLayout>
+        <StackLayout Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"  VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="LabelMidRangePercentage" Style="{StaticResource plainLabel}"   Text="Mide Range"/>
+        </StackLayout>
+        <StackLayout Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
+          <Label x:Name="LabelThreePointerPercentage" Style="{StaticResource plainLabel}" Text="Three Pointers"/>
+        </StackLayout>
+
+
+        <!-- Remove Buttons -->
+        <Button x:Name="RemoveShotCountedFreeThrow"    Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="0"/>
+        <Button x:Name="RemoveShotMissedFreeThrow"     Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="1"/>
+        <Button x:Name="RemoveShotCountedMidRange"     Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="2"/>
+        <Button x:Name="RemoveShotMissedMidRange"      Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="3"/>
+        <Button x:Name="RemoveShotCountedThreePointer" Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="4"/>
+        <Button x:Name="RemoveShotMissedThreePointer"  Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="5"/>
+      </Grid>
+    </ScrollView>
+  </ContentPage.Content>
+  </ContentPage>
