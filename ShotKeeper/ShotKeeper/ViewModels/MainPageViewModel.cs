@@ -2,8 +2,6 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ShotKeeper.ViewModels
 {
@@ -17,13 +15,19 @@ namespace ShotKeeper.ViewModels
         private string _valueMidRange;
         private string _valueThreePointers;
 
-        private int _numberOfFreeThrows;
-        private int _numberOfMidRanges;
-        private int _numberOfThreePointers;
+        private double _numberOfFreeThrows;
+        private double _numberOfMidRanges;
+        private double _numberOfThreePointers;
 
-        private int _numberOfFreeThrowsCounted;
-        private int _numberOfMidRangesCounted;
-        private int _numberOfThreePointersCounted;
+        private double _numberOfFreeThrowsCounted;
+        private double _numberOfMidRangesCounted;
+        private double _numberOfThreePointersCounted;
+
+        #endregion
+
+        #region Commands
+
+        public DelegateCommand<String> AddCommand { get; private set; }
 
         #endregion
 
@@ -32,17 +36,50 @@ namespace ShotKeeper.ViewModels
         public MainPageViewModel()
         {
             _numberOfFreeThrows = 0;
-            _numberOfMidRanges = 0;
-            _numberOfThreePointers = 0;
+            NumberOfMidRanges = 0;
+            NumberOfThreePointers = 0;
 
-            _numberOfFreeThrowsCounted = 0;
-            _numberOfMidRangesCounted = 0;
-            _numberOfThreePointersCounted = 0;
+            NumberOfFreeThrowsCounted = 0;
+            NumberOfMidRangesCounted = 0;
+            NumberOfThreePointersCounted = 0;
 
             UpdateValueFreeThrow();
             UpdateValueMidRange();
             UpdateValueThreePointers();
             UpdateValueTotalShootingPercentage();
+
+            AddCommand = new DelegateCommand<String>(OnAddCommand, CanAddCommand);
+        }
+
+        private bool CanAddCommand(String obj)
+        {
+            return true;
+        }
+
+        private void OnAddCommand(String obj)
+        {
+            switch(obj)
+            {
+                case "CountedFreeThrow":
+                    AddNumberOfFreeThrowCounted();
+                    break;
+                case "FreeThrow":
+                    AddNumberOfFreeThrow();
+                    break;
+                case "CountedMidRange":
+                    AddNumberOfMidRangesCounted();
+                    break;
+                case "MidRange":
+                    AddNumberOfMidRanges();
+                    break;
+                case "CountedThreePointer":
+                    AddNumberOfThreePointersCounted();
+                    break;
+                case "ThreePointer":
+                    AddNumberOfThreePointers();
+                    break;
+            }
+            
         }
 
         #endregion
@@ -75,6 +112,71 @@ namespace ShotKeeper.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        public double NumberOfMidRanges
+        {
+            get
+            {
+                return _numberOfMidRanges;
+            }
+
+            set
+            {
+                _numberOfMidRanges = value;
+            }
+        }
+
+        public double NumberOfThreePointers
+        {
+            get
+            {
+                return _numberOfThreePointers;
+            }
+
+            set
+            {
+                _numberOfThreePointers = value;
+            }
+        }
+
+        public double NumberOfFreeThrowsCounted
+        {
+            get
+            {
+                return _numberOfFreeThrowsCounted;
+            }
+
+            set
+            {
+                _numberOfFreeThrowsCounted = value;
+            }
+        }
+
+        public double NumberOfMidRangesCounted
+        {
+            get
+            {
+                return _numberOfMidRangesCounted;
+            }
+
+            set
+            {
+                _numberOfMidRangesCounted = value;
+            }
+        }
+
+        public double NumberOfThreePointersCounted
+        {
+            get
+            {
+                return _numberOfThreePointersCounted;
+            }
+
+            set
+            {
+                _numberOfThreePointersCounted = value;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -88,32 +190,33 @@ namespace ShotKeeper.ViewModels
 
         private void AddNumberOfFreeThrowCounted()
         {
-            _numberOfFreeThrowsCounted++;
+            NumberOfFreeThrowsCounted++;
             AddNumberOfFreeThrow();
         }
 
         private void AddNumberOfMidRanges()
         {
-            _numberOfMidRanges++;
+            NumberOfMidRanges++;
             UpdateValueMidRange();
             UpdateValueTotalShootingPercentage();
         }
 
         private void AddNumberOfMidRangesCounted()
         {
-            _numberOfMidRangesCounted++;
+            NumberOfMidRangesCounted++;
             AddNumberOfMidRanges();
         }
+
         private void AddNumberOfThreePointers()
         {
-            _numberOfThreePointers++;
+            NumberOfThreePointers++;
             UpdateValueThreePointers();
             UpdateValueTotalShootingPercentage();
         }
 
         private void AddNumberOfThreePointersCounted()
         {
-            _numberOfThreePointersCounted++;
+            NumberOfThreePointersCounted++;
             AddNumberOfThreePointers();
         }
 
@@ -121,52 +224,56 @@ namespace ShotKeeper.ViewModels
         {
             int percentage = 0;
 
-            if (_numberOfThreePointers > 0)
+            if (_numberOfFreeThrows > 0)
             {
-                percentage = _numberOfFreeThrowsCounted / _numberOfFreeThrows;
+                percentage = Convert.ToInt32((NumberOfFreeThrowsCounted / _numberOfFreeThrows) * 100);
             }
 
-            ValueFreeThrow = percentage + "% (" + _numberOfFreeThrowsCounted + "/" + _numberOfFreeThrows + ")";
+            ValueFreeThrow = String.Format("{0}%\n({1}/{2})", percentage, NumberOfFreeThrowsCounted, _numberOfFreeThrows);
         }
 
         private void UpdateValueMidRange()
         {
             int percentage = 0;
 
-            if (_numberOfMidRanges > 0)
+            if (NumberOfMidRanges > 0)
             {
-                percentage = _numberOfMidRangesCounted / _numberOfMidRanges;
+                percentage = Convert.ToInt32((NumberOfMidRangesCounted / NumberOfMidRanges) * 100);
             }
 
-            ValueMidRange = percentage + "% (" + _numberOfMidRangesCounted + "/" + _numberOfMidRanges + ")";
+            ValueMidRange = String.Format("{0}%\n({1}/{2})", percentage, NumberOfMidRangesCounted,NumberOfMidRanges);
         }
 
         private void UpdateValueThreePointers()
         {
             int percentage = 0;
 
-            if (_numberOfThreePointers > 0)
+            if (NumberOfThreePointers > 0)
             {
-                percentage = _numberOfThreePointersCounted / _numberOfThreePointers;
+                percentage = Convert.ToInt32((NumberOfThreePointersCounted / NumberOfThreePointers) * 100);
             }
 
-            ValueThreePointers = percentage + "% (" + _numberOfThreePointersCounted + "/" + _numberOfThreePointers + ")";
+            ValueThreePointers = String.Format("{0}%\n({1}/{2})", percentage, NumberOfThreePointersCounted, NumberOfThreePointers);
         }
 
         private void UpdateValueTotalShootingPercentage()
         {
             int percentage = 0;
-            int totalShots = _numberOfFreeThrows + _numberOfMidRanges + _numberOfThreePointers;
-            int totalShotsCounted = _numberOfFreeThrowsCounted + _numberOfMidRangesCounted + _numberOfThreePointersCounted;
+            double totalShots = _numberOfFreeThrows + NumberOfMidRanges + NumberOfThreePointers;
+            double totalShotsCounted = NumberOfFreeThrowsCounted + NumberOfMidRangesCounted + NumberOfThreePointersCounted;
 
             if (totalShots > 0)
             {
-                percentage = totalShotsCounted / totalShots;
+                percentage = Convert.ToInt32((totalShotsCounted / totalShots) * 100);
             }
 
-            ValueTotalShooting = percentage + "% (" + totalShotsCounted + "/" + totalShots + ")";
+            ValueTotalShooting = String.Format("{0}%\n({1}/{2})", percentage, totalShotsCounted, totalShots);
 
         }
+
+        #endregion
+
+        #region Command Handlers
 
         #endregion
 
