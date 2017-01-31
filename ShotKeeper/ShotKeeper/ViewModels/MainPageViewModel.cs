@@ -9,8 +9,11 @@ namespace ShotKeeper.ViewModels
     {
         #region Private Members
 
+        private const string OUT_PERCENTAGE_STRING_TEMPLATE = "{0}%\n({1}/{2})";
+
         private string _title;
         private string _valueTotalShooting;
+
         private string _valueFreeThrow;
         private string _valueMidRange;
         private string _valueThreePointers;
@@ -28,6 +31,7 @@ namespace ShotKeeper.ViewModels
         #region Commands
 
         public DelegateCommand<String> AddCommand { get; private set; }
+        public DelegateCommand<String> RemoveCommand { get; private set; }
 
         #endregion
 
@@ -49,69 +53,51 @@ namespace ShotKeeper.ViewModels
             UpdateValueTotalShootingPercentage();
 
             AddCommand = new DelegateCommand<String>(OnAddCommand, CanAddCommand);
-        }
-
-        private bool CanAddCommand(String obj)
-        {
-            return true;
-        }
-
-        private void OnAddCommand(String obj)
-        {
-            switch(obj)
-            {
-                case "CountedFreeThrow":
-                    AddNumberOfFreeThrowCounted();
-                    break;
-                case "FreeThrow":
-                    AddNumberOfFreeThrow();
-                    break;
-                case "CountedMidRange":
-                    AddNumberOfMidRangesCounted();
-                    break;
-                case "MidRange":
-                    AddNumberOfMidRanges();
-                    break;
-                case "CountedThreePointer":
-                    AddNumberOfThreePointersCounted();
-                    break;
-                case "ThreePointer":
-                    AddNumberOfThreePointers();
-                    break;
-            }
-            
+            RemoveCommand = new DelegateCommand<String>(OnRemoveCommand, CanRemoveCommand);
         }
 
         #endregion
 
         #region Properties
 
-        public string ValueThreePointers
+        public string Title
         {
-            get { return  _valueThreePointers; }
-            set { SetProperty(ref  _valueThreePointers, value); }
-        }
-        public string ValueMidRange
-        {
-            get { return _valueMidRange; }
-            set { SetProperty(ref _valueMidRange, value); }
-        }
-        public string ValueFreeThrow
-        {
-            get { return _valueFreeThrow; }
-            set { SetProperty(ref _valueFreeThrow, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
         public string ValueTotalShooting
         {
             get { return _valueTotalShooting; }
             set { SetProperty(ref _valueTotalShooting, value); }
         }
-        public string Title
+
+        public string ValueFreeThrow
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get { return _valueFreeThrow; }
+            set { SetProperty(ref _valueFreeThrow, value); }
+        }
+        public string ValueMidRange
+        {
+            get { return _valueMidRange; }
+            set { SetProperty(ref _valueMidRange, value); }
+        }
+        public string ValueThreePointers
+        {
+            get { return _valueThreePointers; }
+            set { SetProperty(ref _valueThreePointers, value); }
         }
 
+        public double NumberOfFreeThrows
+        {
+            get {
+                return _numberOfFreeThrows;
+            }
+
+            set
+            {
+                _numberOfFreeThrows = value;
+            }
+        }
         public double NumberOfMidRanges
         {
             get
@@ -124,7 +110,6 @@ namespace ShotKeeper.ViewModels
                 _numberOfMidRanges = value;
             }
         }
-
         public double NumberOfThreePointers
         {
             get
@@ -150,7 +135,6 @@ namespace ShotKeeper.ViewModels
                 _numberOfFreeThrowsCounted = value;
             }
         }
-
         public double NumberOfMidRangesCounted
         {
             get
@@ -163,7 +147,6 @@ namespace ShotKeeper.ViewModels
                 _numberOfMidRangesCounted = value;
             }
         }
-
         public double NumberOfThreePointersCounted
         {
             get
@@ -183,8 +166,20 @@ namespace ShotKeeper.ViewModels
 
         private void AddNumberOfFreeThrow()
         {
-            _numberOfFreeThrows++;
+            NumberOfFreeThrows++;
             UpdateValueFreeThrow();
+            UpdateValueTotalShootingPercentage();
+        }
+        private void AddNumberOfMidRanges()
+        {
+            NumberOfMidRanges++;
+            UpdateValueMidRange();
+            UpdateValueTotalShootingPercentage();
+        }
+        private void AddNumberOfThreePointers()
+        {
+            NumberOfThreePointers++;
+            UpdateValueThreePointers();
             UpdateValueTotalShootingPercentage();
         }
 
@@ -193,31 +188,68 @@ namespace ShotKeeper.ViewModels
             NumberOfFreeThrowsCounted++;
             AddNumberOfFreeThrow();
         }
-
-        private void AddNumberOfMidRanges()
-        {
-            NumberOfMidRanges++;
-            UpdateValueMidRange();
-            UpdateValueTotalShootingPercentage();
-        }
-
         private void AddNumberOfMidRangesCounted()
         {
             NumberOfMidRangesCounted++;
             AddNumberOfMidRanges();
         }
-
-        private void AddNumberOfThreePointers()
-        {
-            NumberOfThreePointers++;
-            UpdateValueThreePointers();
-            UpdateValueTotalShootingPercentage();
-        }
-
         private void AddNumberOfThreePointersCounted()
         {
             NumberOfThreePointersCounted++;
             AddNumberOfThreePointers();
+        }
+
+        private void RemoveNumberOfFreeThrow()
+        {
+            if (NumberOfFreeThrows > 0)
+            {
+                NumberOfFreeThrows--;
+                UpdateValueFreeThrow();
+                UpdateValueTotalShootingPercentage();
+            }
+        }
+        private void RemoveNumberOfMidRanges()
+        {
+            if (NumberOfMidRanges > 0)
+            {
+                NumberOfMidRanges--;
+                UpdateValueMidRange();
+                UpdateValueTotalShootingPercentage();
+            }
+        }
+        private void RemoveNumberOfThreePointers()
+        {
+            if (NumberOfThreePointers > 0)
+            {
+                NumberOfThreePointers--;
+                UpdateValueThreePointers();
+                UpdateValueTotalShootingPercentage();
+            }
+        }
+
+        private void RemoveNumberOfFreeThrowCounted()
+        {
+            if (NumberOfFreeThrowsCounted > 0)
+            {
+                NumberOfFreeThrowsCounted--;
+                RemoveNumberOfFreeThrow();
+            }
+        }
+        private void RemoveNumberOfMidRangesCounted()
+        {
+            if (NumberOfMidRangesCounted > 0)
+            {
+                NumberOfMidRangesCounted--;
+                RemoveNumberOfMidRanges();
+            }
+        }
+        private void RemoveNumberOfThreePointersCounted()
+        {
+            if (NumberOfThreePointersCounted > 0)
+            {
+                NumberOfThreePointersCounted--;
+                RemoveNumberOfThreePointers();
+            }
         }
 
         private void UpdateValueFreeThrow()
@@ -229,9 +261,8 @@ namespace ShotKeeper.ViewModels
                 percentage = Convert.ToInt32((NumberOfFreeThrowsCounted / _numberOfFreeThrows) * 100);
             }
 
-            ValueFreeThrow = String.Format("{0}%\n({1}/{2})", percentage, NumberOfFreeThrowsCounted, _numberOfFreeThrows);
+            ValueFreeThrow = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfFreeThrowsCounted, _numberOfFreeThrows);
         }
-
         private void UpdateValueMidRange()
         {
             int percentage = 0;
@@ -241,9 +272,8 @@ namespace ShotKeeper.ViewModels
                 percentage = Convert.ToInt32((NumberOfMidRangesCounted / NumberOfMidRanges) * 100);
             }
 
-            ValueMidRange = String.Format("{0}%\n({1}/{2})", percentage, NumberOfMidRangesCounted,NumberOfMidRanges);
+            ValueMidRange = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfMidRangesCounted,NumberOfMidRanges);
         }
-
         private void UpdateValueThreePointers()
         {
             int percentage = 0;
@@ -253,9 +283,8 @@ namespace ShotKeeper.ViewModels
                 percentage = Convert.ToInt32((NumberOfThreePointersCounted / NumberOfThreePointers) * 100);
             }
 
-            ValueThreePointers = String.Format("{0}%\n({1}/{2})", percentage, NumberOfThreePointersCounted, NumberOfThreePointers);
+            ValueThreePointers = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfThreePointersCounted, NumberOfThreePointers);
         }
-
         private void UpdateValueTotalShootingPercentage()
         {
             int percentage = 0;
@@ -267,13 +296,74 @@ namespace ShotKeeper.ViewModels
                 percentage = Convert.ToInt32((totalShotsCounted / totalShots) * 100);
             }
 
-            ValueTotalShooting = String.Format("{0}%\n({1}/{2})", percentage, totalShotsCounted, totalShots);
+            ValueTotalShooting = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, totalShotsCounted, totalShots);
 
         }
 
         #endregion
 
         #region Command Handlers
+
+        private bool CanAddCommand(String obj)
+        {
+            return true;
+        }
+
+        private void OnAddCommand(String obj)
+        {
+            switch (obj)
+            {
+                case "CountedFreeThrow":
+                    AddNumberOfFreeThrowCounted();
+                    break;
+                case "FreeThrow":
+                    AddNumberOfFreeThrow();
+                    break;
+                case "CountedMidRange":
+                    AddNumberOfMidRangesCounted();
+                    break;
+                case "MidRange":
+                    AddNumberOfMidRanges();
+                    break;
+                case "CountedThreePointer":
+                    AddNumberOfThreePointersCounted();
+                    break;
+                case "ThreePointer":
+                    AddNumberOfThreePointers();
+                    break;
+            }
+        }
+
+
+        private bool CanRemoveCommand(string arg)
+        {
+            return true;
+        }
+
+        private void OnRemoveCommand(string obj)
+        {
+            switch (obj)
+            {
+                case "CountedFreeThrow":
+                    RemoveNumberOfFreeThrowCounted();
+                    break;
+                case "FreeThrow":
+                    RemoveNumberOfFreeThrow();
+                    break;
+                case "CountedMidRange":
+                    RemoveNumberOfMidRangesCounted();
+                    break;
+                case "MidRange":
+                    RemoveNumberOfMidRanges();
+                    break;
+                case "CountedThreePointer":
+                    RemoveNumberOfThreePointersCounted();
+                    break;
+                case "ThreePointer":
+                    RemoveNumberOfThreePointers();
+                    break;
+            }
+        }
 
         #endregion
 
