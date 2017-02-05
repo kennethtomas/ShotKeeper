@@ -15,7 +15,7 @@ namespace ShotKeeper.ViewModels
 
         private const string SPEECH_RATIO_STRING_TEMPLATE = "{0} out of {1} {2}";
         private const string SPEECH_FREE_THROWS_NAME = "Free Throws";
-        private const string SPEECH_MID_RANGES_NAME = "Mid Ranges";
+        private const string SPEECH_MID_RANGES_NAME = "Field Goals";
         private const string SPEECH_THREE_POINTERS_NAME = "Three Pointers";
 
         #endregion

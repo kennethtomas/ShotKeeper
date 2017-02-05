@@ -55,7 +55,7 @@
           <Label x:Name="ValueTotalShootingPercentage" Style="{StaticResource plainLabel}" Text="{Binding ValueTotalShooting}"/>
         </StackLayout>
         <StackLayout Grid.Row="1" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="LBLTotalShootingPercentage"   Style="{StaticResource shotTypeLabel}" Text="Total Shooting Percentage"/>
+          <Label x:Name="LBLTotalShootingPercentage"   Style="{StaticResource shotTypeLabel}" Text="Total"/>
         </StackLayout>
 
         <!-- Add buttons -->
@@ -79,13 +79,13 @@
         </StackLayout>
 
         <StackLayout  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="LabelFreeThrowPercentage" Style="{StaticResource shotTypeLabel}"   Text="Free Throws"/>
+          <Label x:Name="LabelFreeThrowPercentage" Style="{StaticResource shotTypeLabel}"   Text="FT"/>
         </StackLayout>
         <StackLayout Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"  VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="LabelMidRangePercentage" Style="{StaticResource shotTypeLabel}"   Text="Mide Range"/>
+          <Label x:Name="LabelMidRangePercentage" Style="{StaticResource shotTypeLabel}"   Text="FG"/>
         </StackLayout>
         <StackLayout Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="LabelThreePointerPercentage" Style="{StaticResource shotTypeLabel}" Text="Three Pointers"/>
+          <Label x:Name="LabelThreePointerPercentage" Style="{StaticResource shotTypeLabel}" Text="3PT"/>
         </StackLayout>
 
 
