@@ -2,7 +2,6 @@ using System;
 using ShotKeeper.Interfaces;
 using Android.Speech.Tts;
 using Xamarin.Forms;
-using System.Collections.Generic;
 using ShotKeeper.Droid.Implementations;
 
 [assembly: Xamarin.Forms.Dependency (typeof (TextToSpeechImplementation))]
@@ -13,14 +12,6 @@ namespace ShotKeeper.Droid.Implementations
 
         private TextToSpeech _speaker;
         private string _toSpeak;
-
-        public IntPtr Handle
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         public TextToSpeechImplementation() { }
 
@@ -47,10 +38,6 @@ namespace ShotKeeper.Droid.Implementations
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }

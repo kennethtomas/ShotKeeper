@@ -28,12 +28,12 @@
     <ScrollView>
       <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="5">
         <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
-          <RowDefinition Height="*" />
+          <RowDefinition Height="*" /><!-- Total Shots Value -->
+          <RowDefinition Height="20" /><!-- Total Shots Label -->
+          <RowDefinition Height="*" /><!-- Add Buttons -->
+          <RowDefinition Height="*" /><!-- Shot Values -->
+          <RowDefinition Height="20" /><!-- Shot Labels -->
+          <RowDefinition Height="*" /><!-- Minus Buttons -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
@@ -47,6 +47,7 @@
         <!-- Total Shooting Percentage -->
         <StackLayout Grid.Row="0" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
           <StackLayout Orientation="Horizontal">
+            <Button Text="Listen" Command="{Binding ListenCommand}"/>
             <Label Text="Speak" />
             <Switch IsToggled="{Binding SpeakEnabled}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>

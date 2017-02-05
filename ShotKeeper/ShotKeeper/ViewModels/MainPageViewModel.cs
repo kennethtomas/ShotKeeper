@@ -46,6 +46,8 @@ namespace ShotKeeper.ViewModels
         public DelegateCommand<String> AddCommand { get; private set; }
         public DelegateCommand<String> RemoveCommand { get; private set; }
 
+        public DelegateCommand ListenCommand { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -69,6 +71,7 @@ namespace ShotKeeper.ViewModels
 
             AddCommand = new DelegateCommand<String>(OnAddCommand, CanAddCommand);
             RemoveCommand = new DelegateCommand<String>(OnRemoveCommand, CanRemoveCommand);
+            ListenCommand = new DelegateCommand(OnListenCommand, CanListenCommand);
         }
 
         #endregion
@@ -399,8 +402,7 @@ namespace ShotKeeper.ViewModels
                     break;
             }
         }
-
-
+        
         private bool CanRemoveCommand(string arg)
         {
             return true;
@@ -429,6 +431,16 @@ namespace ShotKeeper.ViewModels
                     RemoveNumberOfThreePointers();
                     break;
             }
+        }
+
+        private bool CanListenCommand()
+        {
+            return true;
+        }
+
+        private void OnListenCommand()
+        {
+            DependencyService.Get<ISpeechToText>().StartListening();
         }
 
         #endregion
