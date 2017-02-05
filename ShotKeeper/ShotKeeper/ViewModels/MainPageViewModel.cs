@@ -1,15 +1,26 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using ShotKeeper.Interfaces;
 using System;
+using Xamarin.Forms;
 
 namespace ShotKeeper.ViewModels
 {
     public class MainPageViewModel : BindableBase, INavigationAware
     {
-        #region Private Members
+        #region Constants
 
         private const string OUT_PERCENTAGE_STRING_TEMPLATE = "{0}%\n({1}/{2})";
+
+        private const string SPEECH_RATIO_STRING_TEMPLATE = "{0} out of {1} {2}";
+        private const string SPEECH_FREE_THROWS_NAME = "Free Throws";
+        private const string SPEECH_MID_RANGES_NAME = "Mid Ranges";
+        private const string SPEECH_THREE_POINTERS_NAME = "Three Pointers";
+
+        #endregion
+
+        #region Private Members
 
         private string _title;
         private string _valueTotalShooting;
@@ -26,6 +37,8 @@ namespace ShotKeeper.ViewModels
         private double _numberOfMidRangesCounted;
         private double _numberOfThreePointersCounted;
 
+        private bool _speakEnabled;
+
         #endregion
 
         #region Commands
@@ -39,13 +52,15 @@ namespace ShotKeeper.ViewModels
 
         public MainPageViewModel()
         {
-            _numberOfFreeThrows = 0;
+            NumberOfFreeThrows = 0;
             NumberOfMidRanges = 0;
             NumberOfThreePointers = 0;
 
             NumberOfFreeThrowsCounted = 0;
             NumberOfMidRangesCounted = 0;
             NumberOfThreePointersCounted = 0;
+
+            SpeakEnabled = false;
 
             UpdateValueFreeThrow();
             UpdateValueMidRange();
@@ -160,6 +175,12 @@ namespace ShotKeeper.ViewModels
             }
         }
 
+        public bool SpeakEnabled
+        {
+            get { return _speakEnabled; }
+            set { SetProperty(ref _speakEnabled, value); }
+        }
+
         #endregion
 
         #region Methods
@@ -201,7 +222,15 @@ namespace ShotKeeper.ViewModels
 
         private void RemoveNumberOfFreeThrow()
         {
-            if (NumberOfFreeThrows > 0)
+            if (NumberOfFreeThrows == NumberOfFreeThrowsCounted &&
+                NumberOfFreeThrows > 0)
+            {
+                NumberOfFreeThrows--;
+                NumberOfFreeThrowsCounted--;
+                UpdateValueFreeThrow();
+                UpdateValueTotalShootingPercentage();
+            }
+            else if (NumberOfFreeThrows > 0)
             {
                 NumberOfFreeThrows--;
                 UpdateValueFreeThrow();
@@ -210,7 +239,15 @@ namespace ShotKeeper.ViewModels
         }
         private void RemoveNumberOfMidRanges()
         {
-            if (NumberOfMidRanges > 0)
+            if (NumberOfMidRanges == NumberOfMidRangesCounted &&
+                NumberOfMidRanges > 0)
+            {
+                NumberOfMidRanges--;
+                NumberOfThreePointersCounted--;
+                UpdateValueMidRange();
+                UpdateValueTotalShootingPercentage();
+            }
+            else if (NumberOfMidRanges > 0)
             {
                 NumberOfMidRanges--;
                 UpdateValueMidRange();
@@ -219,7 +256,15 @@ namespace ShotKeeper.ViewModels
         }
         private void RemoveNumberOfThreePointers()
         {
-            if (NumberOfThreePointers > 0)
+            if (NumberOfThreePointers == NumberOfThreePointersCounted &&
+                NumberOfThreePointers > 0)
+            {
+                NumberOfThreePointers--;
+                NumberOfThreePointersCounted--;
+                UpdateValueThreePointers();
+                UpdateValueTotalShootingPercentage();
+            }
+            else if (NumberOfThreePointers > 0)
             {
                 NumberOfThreePointers--;
                 UpdateValueThreePointers();
@@ -251,7 +296,7 @@ namespace ShotKeeper.ViewModels
                 RemoveNumberOfThreePointers();
             }
         }
-
+        
         private void UpdateValueFreeThrow()
         {
             int percentage = 0;
@@ -262,6 +307,11 @@ namespace ShotKeeper.ViewModels
             }
 
             ValueFreeThrow = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfFreeThrowsCounted, _numberOfFreeThrows);
+
+            if (SpeakEnabled)
+            {
+                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfFreeThrowsCounted, _numberOfFreeThrows, SPEECH_FREE_THROWS_NAME));
+            }
         }
         private void UpdateValueMidRange()
         {
@@ -272,7 +322,13 @@ namespace ShotKeeper.ViewModels
                 percentage = Convert.ToInt32((NumberOfMidRangesCounted / NumberOfMidRanges) * 100);
             }
 
-            ValueMidRange = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfMidRangesCounted,NumberOfMidRanges);
+            ValueMidRange = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfMidRangesCounted, NumberOfMidRanges);
+
+            if (SpeakEnabled)
+            {
+                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfMidRangesCounted, NumberOfMidRanges, SPEECH_MID_RANGES_NAME));
+
+            }
         }
         private void UpdateValueThreePointers()
         {
@@ -284,6 +340,11 @@ namespace ShotKeeper.ViewModels
             }
 
             ValueThreePointers = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfThreePointersCounted, NumberOfThreePointers);
+
+            if (SpeakEnabled)
+            {
+                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfThreePointersCounted, NumberOfThreePointers, SPEECH_THREE_POINTERS_NAME));
+            }
         }
         private void UpdateValueTotalShootingPercentage()
         {
@@ -298,6 +359,11 @@ namespace ShotKeeper.ViewModels
 
             ValueTotalShooting = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, totalShotsCounted, totalShots);
 
+        }
+
+        private void Speak(string text)
+        {
+            DependencyService.Get<ITextToSpeech>().Speak(text);
         }
 
         #endregion

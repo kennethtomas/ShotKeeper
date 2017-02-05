@@ -26,7 +26,7 @@
   </ContentPage.Resources>
   <ContentPage.Content>
     <ScrollView>
-      <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="1">
+      <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="5">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
           <RowDefinition Height="*" />
@@ -46,6 +46,11 @@
 
         <!-- Total Shooting Percentage -->
         <StackLayout Grid.Row="0" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
+          <StackLayout Orientation="Horizontal">
+            <Label Text="Speak" />
+            <Switch IsToggled="{Binding SpeakEnabled}" HorizontalOptions="EndAndExpand"/>
+          </StackLayout>
+          
           <Label x:Name="ValueTotalShootingPercentage" Style="{StaticResource plainLabel}" Text="{Binding ValueTotalShooting}"/>
         </StackLayout>
         <StackLayout Grid.Row="1" Grid.ColumnSpan="6" VerticalOptions="Center" HorizontalOptions="Center">
