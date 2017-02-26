@@ -11,12 +11,14 @@ namespace ShotKeeper
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync("MainPage?title=Hello%20from%20Xamarin.Forms");
+            //NavigationService.NavigateAsync("MainPage?title=Hello%20from%20Xamarin.Forms");
+            NavigationService.NavigateAsync("ShotKeeperPage");
         }
 
         protected override void RegisterTypes()
         {
-            Container.RegisterTypeForNavigation<MainPage>();
+            Container.RegisterTypeForNavigation<ShotKeeperPage>();
+            Container.RegisterTypeForNavigation<HomePage>();
         }
     }
 }

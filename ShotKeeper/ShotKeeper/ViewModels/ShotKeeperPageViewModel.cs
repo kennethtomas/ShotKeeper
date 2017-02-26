@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace ShotKeeper.ViewModels
 {
-    public class MainPageViewModel : BindableBase, INavigationAware
+    public class ShotKeeperPageViewModel : BindableBase, INavigationAware
     {
         #region Constants
 
@@ -39,6 +39,8 @@ namespace ShotKeeper.ViewModels
 
         private bool _speakEnabled;
 
+        private bool _buttonIsEnabled;
+
         #endregion
 
         #region Commands
@@ -52,7 +54,7 @@ namespace ShotKeeper.ViewModels
 
         #region Constructors
 
-        public MainPageViewModel()
+        public ShotKeeperPageViewModel()
         {
             NumberOfFreeThrows = 0;
             NumberOfMidRanges = 0;
@@ -69,6 +71,11 @@ namespace ShotKeeper.ViewModels
             UpdateValueThreePointers();
             UpdateValueTotalShootingPercentage();
 
+            InitialiseCommands();
+        }
+
+        private void InitialiseCommands()
+        {
             AddCommand = new DelegateCommand<String>(OnAddCommand, CanAddCommand);
             RemoveCommand = new DelegateCommand<String>(OnRemoveCommand, CanRemoveCommand);
             ListenCommand = new DelegateCommand(OnListenCommand, CanListenCommand);
@@ -182,6 +189,14 @@ namespace ShotKeeper.ViewModels
         {
             get { return _speakEnabled; }
             set { SetProperty(ref _speakEnabled, value); }
+        }
+
+        public IShotKeeper ShotKeeper { get; set; }
+
+        public bool ButtonIsEnabled
+        {
+            get { return _buttonIsEnabled; }
+            set { SetProperty(ref _buttonIsEnabled, value); }
         }
 
         #endregion
@@ -383,12 +398,14 @@ namespace ShotKeeper.ViewModels
             switch (obj)
             {
                 case "CountedFreeThrow":
+                    ButtonIsEnabled = false;
                     AddNumberOfFreeThrowCounted();
                     break;
                 case "FreeThrow":
                     AddNumberOfFreeThrow();
                     break;
                 case "CountedMidRange":
+                    ButtonIsEnabled = true;
                     AddNumberOfMidRangesCounted();
                     break;
                 case "MidRange":

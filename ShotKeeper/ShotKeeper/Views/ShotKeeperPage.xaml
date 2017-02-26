@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="ShotKeeper.Views.MainPage"
-             Title="MainPage">
+             x:Class="ShotKeeper.Views.ShotKeeperPage"
+             Title="Shot Keeper">
 
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -59,7 +59,7 @@
         </StackLayout>
 
         <!-- Add buttons -->
-        <Button x:Name="AddShotCountedFreeThrow"    Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="0" Command="{Binding AddCommand}" CommandParameter="CountedFreeThrow"/>
+        <Button x:Name="AddShotCountedFreeThrow"    Style="{StaticResource buttonStyle}" Text="+" Grid.Row="2" Grid.Column="0" Command="{Binding AddCommand}" CommandParameter="CountedFreeThrow" IsEnabled="{Binding ButtonIsEnabled}" />
         <Button x:Name="AddShotMissedFreeThrow"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="1" Command="{Binding AddCommand}" CommandParameter="FreeThrow"/>
         <Button x:Name="AddShotCountedMidRange"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="2" Command="{Binding AddCommand}" CommandParameter="CountedMidRange"/>
         <Button x:Name="AddShotMissedMidRange"      Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="3" Command="{Binding AddCommand}" CommandParameter="MidRange"/>
@@ -87,7 +87,6 @@
         <StackLayout Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
           <Label x:Name="LabelThreePointerPercentage" Style="{StaticResource shotTypeLabel}" Text="3PT"/>
         </StackLayout>
-
 
         <!-- Remove Buttons -->
         <Button x:Name="RemoveShotCountedFreeThrow"    Style="{StaticResource plainButton}" Text="-" Grid.Row="5" Grid.Column="0" Command="{Binding RemoveCommand}" CommandParameter="CountedFreeThrow"/>
