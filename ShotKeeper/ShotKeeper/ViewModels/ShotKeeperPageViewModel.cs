@@ -475,6 +475,11 @@ namespace ShotKeeper.ViewModels
                 Title = (string)parameters["title"] + " and Prism";
         }
 
+        public void OnNavigatingTo(NavigationParameters parameters)
+        {
+            
+        }
+
         #endregion
     }
 }

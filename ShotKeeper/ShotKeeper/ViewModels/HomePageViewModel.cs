@@ -28,5 +28,10 @@ namespace ShotKeeper.ViewModels
                 GameListItems.Add(new MainPageListItem { Title = string.Format("Game {0}", i), LastModified = DateTime.Now });
             }
         }
+
+        public void OnNavigatingTo(NavigationParameters parameters)
+        {
+            
+        }
     }
 }
