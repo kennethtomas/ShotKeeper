@@ -2,7 +2,10 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using ShotKeeper.Interfaces;
+using ShotKeeper.Models;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace ShotKeeper.ViewModels
@@ -21,6 +24,8 @@ namespace ShotKeeper.ViewModels
         #endregion
 
         #region Private Members
+
+        INavigationService _navigationService;
 
         private string _title;
         private string _valueTotalShooting;
@@ -41,12 +46,17 @@ namespace ShotKeeper.ViewModels
 
         private bool _buttonIsEnabled;
 
+        private ObservableCollection<ShootingSession> _shootingSessions;
+        private ShootingSession _currentSession;
+
         #endregion
 
         #region Commands
 
         public DelegateCommand<String> AddCommand { get; private set; }
         public DelegateCommand<String> RemoveCommand { get; private set; }
+        public DelegateCommand SaveCommand { get; private set; }
+        public DelegateCommand CancelCommand { get; private set; }
 
         public DelegateCommand ListenCommand { get; private set; }
 
@@ -54,8 +64,10 @@ namespace ShotKeeper.ViewModels
 
         #region Constructors
 
-        public ShotKeeperPageViewModel()
+        public ShotKeeperPageViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
+
             NumberOfFreeThrows = 0;
             NumberOfMidRanges = 0;
             NumberOfThreePointers = 0;
@@ -79,6 +91,43 @@ namespace ShotKeeper.ViewModels
             AddCommand = new DelegateCommand<String>(OnAddCommand, CanAddCommand);
             RemoveCommand = new DelegateCommand<String>(OnRemoveCommand, CanRemoveCommand);
             ListenCommand = new DelegateCommand(OnListenCommand, CanListenCommand);
+            SaveCommand = new DelegateCommand(OnSaveCommand, CanSaveCommand);
+            CancelCommand = new DelegateCommand(OnCancelCommand, CanCancelCommand);
+        }
+
+        private bool CanCancelCommand()
+        {
+            return true;
+        }
+
+        private async void OnCancelCommand()
+        {
+            await _navigationService.GoBackAsync();
+        }
+
+        private bool CanSaveCommand()
+        {
+            return true;
+        }
+
+        private async void OnSaveCommand()
+        {
+            NavigationParameters param = new NavigationParameters();
+
+            var sesh = _shootingSessions.FirstOrDefault(i => i.ID == CurrentSession.ID);
+            if (null != sesh)
+            {
+                sesh.LastModified = DateTime.Now;   
+            }
+            else
+            {
+                CurrentSession.LastModified = DateTime.Now;
+                _shootingSessions.Add(CurrentSession);
+            }
+            
+            param.Add("ShootingSessions", _shootingSessions);
+
+            await _navigationService.NavigateAsync("SessionsPage", param);
         }
 
         #endregion
@@ -199,6 +248,12 @@ namespace ShotKeeper.ViewModels
             set { SetProperty(ref _buttonIsEnabled, value); }
         }
 
+        public ShootingSession CurrentSession
+        {
+            get { return _currentSession; }
+            set { SetProperty(ref _currentSession, value); }
+        }
+
         #endregion
 
         #region Methods
@@ -317,18 +372,21 @@ namespace ShotKeeper.ViewModels
         
         private void UpdateValueFreeThrow()
         {
-            int percentage = 0;
-
-            if (_numberOfFreeThrows > 0)
+            if (null != _currentSession)
             {
-                percentage = Convert.ToInt32((NumberOfFreeThrowsCounted / _numberOfFreeThrows) * 100);
-            }
+                int percentage = 0;
 
-            ValueFreeThrow = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfFreeThrowsCounted, _numberOfFreeThrows);
+                if (_currentSession.NumberOfFreeThrows > 0)
+                {
+                    percentage = Convert.ToInt32((_currentSession.NumberOfFreeThrowsCounted / _currentSession.NumberOfFreeThrows) * 100);
+                }
 
-            if (SpeakEnabled)
-            {
-                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfFreeThrowsCounted, _numberOfFreeThrows, SPEECH_FREE_THROWS_NAME));
+                ValueFreeThrow = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, _currentSession.NumberOfFreeThrowsCounted, _currentSession.NumberOfFreeThrows);
+
+                if (SpeakEnabled)
+                {
+                    Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, _currentSession.NumberOfFreeThrowsCounted, _currentSession.NumberOfFreeThrows, SPEECH_FREE_THROWS_NAME));
+                }
             }
         }
         private void UpdateValueMidRange()
@@ -398,10 +456,12 @@ namespace ShotKeeper.ViewModels
             switch (obj)
             {
                 case "CountedFreeThrow":
-                    ButtonIsEnabled = false;
-                    AddNumberOfFreeThrowCounted();
+                    CurrentSession.NumberOfFreeThrows++;
+                    CurrentSession.NumberOfFreeThrowsCounted++;
+                    UpdateValueFreeThrow();
                     break;
                 case "FreeThrow":
+                    CurrentSession.NumberOfFreeThrows++;
                     AddNumberOfFreeThrow();
                     break;
                 case "CountedMidRange":
@@ -418,6 +478,9 @@ namespace ShotKeeper.ViewModels
                     AddNumberOfThreePointers();
                     break;
             }
+
+            // Update views
+            UpdateValueTotalShootingPercentage();
         }
         
         private bool CanRemoveCommand(string arg)
@@ -471,8 +534,17 @@ namespace ShotKeeper.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            if (parameters.ContainsKey("title"))
-                Title = (string)parameters["title"] + " and Prism";
+            ObservableCollection<ShootingSession> shootingSeshs;
+            if (parameters.TryGetValue("ShootingSessions", out shootingSeshs))
+            {
+                _shootingSessions = shootingSeshs;
+            }
+
+            ShootingSession shootingSesh;
+            if (parameters.TryGetValue("ShootingSession", out shootingSesh))
+            {
+                CurrentSession = shootingSesh;
+            }
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

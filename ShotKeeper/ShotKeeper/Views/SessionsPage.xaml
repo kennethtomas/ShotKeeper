@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="ShotKeeper.Views.SessionsPage"
+             Title="Sessions">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="NEW" Command="{Binding AddCommand}" Icon="Assets/ic_add.png" Order="Primary"/>
+    </ContentPage.ToolbarItems>
+    <ListView ItemsSource="{Binding ShootingSessionsGrouped}"
+            SelectedItem="{Binding SelectedShootingSession, Mode=TwoWay}"
+            HasUnevenRows="true"
+            GroupShortNameBinding="{Binding Key}"
+            IsGroupingEnabled="true"
+            GroupDisplayBinding="{Binding Key}"
+            IsPullToRefreshEnabled="true"
+            CachingStrategy="RecycleElement"
+            IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+            RefreshCommand="{Binding RefreshDataCommand}">
+        <ListView.Header>
+            <StackLayout Padding="10" 
+                   Orientation="Horizontal"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="#dadada">
+                <Label Text="Header"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="FillAndExpand"
+               TextColor="Black"
+               FontAttributes="Bold"/>
+            </StackLayout>
+        </ListView.Header>
+        <!--Built in Cells-->
+        <!--<ListView.ItemTemplate>
+      <DataTemplate>
+        <TextCell Text="{Binding LastModified}"
+                  Detail="{Binding TotalShots}"/>
+      </DataTemplate>
+    </ListView.ItemTemplate>-->
+
+        <!--Custom View Cells-->
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="10">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding CreatedTime, StringFormat='Created\: {0:d} {0:t}'}" Style="{DynamicResource ListItemTextStyle}" />
+                            <Label Text="{Binding LastModified, StringFormat='Last Modified\: {0:d} {0:t}'}" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding TotalShotsCounted, StringFormat='Total Shots Counted\: {0}'}" Style="{DynamicResource ListItemDetailTextStyle}" />
+                            <Label Text="{Binding TotalShots, StringFormat='Total Shots\: {0}'}" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+        <ListView.Footer>
+            <StackLayout Padding="10"
+                   Orientation="Horizontal"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="#dadada">
+                <Label Text="Footer" 
+               HorizontalTextAlignment="Center" 
+               HorizontalOptions="FillAndExpand" 
+               TextColor="Black"
+               FontAttributes="Bold"/>
+            </StackLayout>
+        </ListView.Footer>
+    </ListView>
+</ContentPage>

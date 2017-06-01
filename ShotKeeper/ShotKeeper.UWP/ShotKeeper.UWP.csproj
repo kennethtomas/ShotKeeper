@@ -110,6 +110,12 @@
     <None Include="ShotKeeper.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ic_add.png" />
+    <Content Include="Assets\ic_add_2x.png" />
+    <Content Include="Assets\ic_add_3x.png" />
+    <Content Include="Assets\ic_cancel.png" />
+    <Content Include="Assets\ic_cancel_2x.png" />
+    <Content Include="Assets\ic_cancel_3x.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

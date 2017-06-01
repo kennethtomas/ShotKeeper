@@ -1,5 +1,6 @@
 ﻿using Prism.Unity;
 using ShotKeeper.Views;
+using Xamarin.Forms;
 
 namespace ShotKeeper
 {
@@ -10,15 +11,17 @@ namespace ShotKeeper
         protected override void OnInitialized()
         {
             InitializeComponent();
-
-            //NavigationService.NavigateAsync("MainPage?title=Hello%20from%20Xamarin.Forms");
-            NavigationService.NavigateAsync("ShotKeeperPage");
+            
+            NavigationService.NavigateAsync("NavigationPage/SessionsPage");
         }
 
         protected override void RegisterTypes()
         {
+            Container.RegisterTypeForNavigation<NavigationPage>();
             Container.RegisterTypeForNavigation<ShotKeeperPage>();
             Container.RegisterTypeForNavigation<HomePage>();
+            Container.RegisterTypeForNavigation<SessionsPage>();
+
         }
     }
 }

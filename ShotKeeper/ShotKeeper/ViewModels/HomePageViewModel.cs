@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Navigation;
 using ShotKeeper.Models;
 using System;
@@ -8,13 +9,51 @@ namespace ShotKeeper.ViewModels
 {
     public class HomePageViewModel : BindableBase, INavigationAware
     {
-        public HomePageViewModel()
+        readonly INavigationService _navigationService;
+
+        public DelegateCommand AddCommand { get; private set; }
+
+        private MainPageListItem selectdGame;
+        public MainPageListItem SelectedGame
         {
+            get { return selectdGame; }
+            set {
+                SetProperty(ref selectdGame, value);
+
+                if (null != value)
+                {
+                    GameSelected(value);
+                }
+            }
+        }
+
+        public HomePageViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
             GameListItems = new ObservableCollection<MainPageListItem>();
-            
+
+            AddCommand = new DelegateCommand(OnAddCommand, CanAddCommand);
+        }
+
+        private bool CanAddCommand()
+        {
+            return true;
+        }
+
+        private async void OnAddCommand()
+        {
+            await _navigationService.NavigateAsync("ShotKeeperPage");
         }
 
         public ObservableCollection<MainPageListItem> GameListItems { get; set; }
+
+        private async void GameSelected(MainPageListItem item)
+        {
+            if (null != item)
+            {
+                await _navigationService.NavigateAsync("ShotKeeperPage");
+            }
+        }
 
         public void OnNavigatedFrom(NavigationParameters parameters)
         {
@@ -23,9 +62,9 @@ namespace ShotKeeper.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            for (int i = 0; i < 20; i++)
+            if (parameters.ContainsKey("ShootingSession"))
             {
-                GameListItems.Add(new MainPageListItem { Title = string.Format("Game {0}", i), LastModified = DateTime.Now });
+                GameListItems.Add(new MainPageListItem { Title = string.Format("Game {0}", GameListItems.Count), LastModified = DateTime.Now });
             }
         }
 

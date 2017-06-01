@@ -24,6 +24,10 @@
       </Style>
     </ResourceDictionary>
   </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Save" Command="{Binding SaveCommand}" Order="Primary"/>
+        <ToolbarItem Name="Cancel" Command="{Binding CancelCommand}" Order="Primary"/>
+    </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ScrollView>
       <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="5">
@@ -59,7 +63,7 @@
         </StackLayout>
 
         <!-- Add buttons -->
-        <Button x:Name="AddShotCountedFreeThrow"    Style="{StaticResource buttonStyle}" Text="+" Grid.Row="2" Grid.Column="0" Command="{Binding AddCommand}" CommandParameter="CountedFreeThrow" IsEnabled="{Binding ButtonIsEnabled}" />
+        <Button x:Name="AddShotCountedFreeThrow"    Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="0" Command="{Binding AddCommand}" CommandParameter="CountedFreeThrow" />
         <Button x:Name="AddShotMissedFreeThrow"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="1" Command="{Binding AddCommand}" CommandParameter="FreeThrow"/>
         <Button x:Name="AddShotCountedMidRange"     Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="2" Command="{Binding AddCommand}" CommandParameter="CountedMidRange"/>
         <Button x:Name="AddShotMissedMidRange"      Style="{StaticResource plainButton}" Text="+" Grid.Row="2" Grid.Column="3" Command="{Binding AddCommand}" CommandParameter="MidRange"/>
@@ -69,7 +73,7 @@
         <!-- Percentage Labels -->
         
         <StackLayout  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="ValueFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueFreeThrow}"/>
+          <Label x:Name="ValueFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="{Binding CurrentSession.NumberOfFreeThrows}"/>
         </StackLayout>
         <StackLayout Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  VerticalOptions="Center" HorizontalOptions="Center">
           <Label x:Name="ValueMidRangePercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueMidRange}"/>

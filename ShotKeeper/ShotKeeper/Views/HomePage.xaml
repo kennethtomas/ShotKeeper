@@ -6,19 +6,19 @@
              x:Class="ShotKeeper.Views.HomePage"
              Title="Shot Keeper">
   <ContentPage.ToolbarItems>
-    <ToolbarItem Name="Create" Command="{Binding NewCommand}"></ToolbarItem>
+    <ToolbarItem Name="+" Command="{Binding AddCommand}"></ToolbarItem>
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
       <Label Text="Title" FontSize="Large" Grid.Row="0" Grid.Column="0"/>
-      <ListView x:Name="listView" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding GameListItems}" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
+        <ListView x:Name="listView" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding GameListItems}" SelectedItem="{Binding SelectedGame}" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
