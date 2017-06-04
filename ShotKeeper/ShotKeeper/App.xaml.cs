@@ -1,6 +1,9 @@
 ﻿using Prism.Unity;
 using ShotKeeper.Views;
 using Xamarin.Forms;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 
 namespace ShotKeeper
 {
@@ -22,6 +25,15 @@ namespace ShotKeeper
             Container.RegisterTypeForNavigation<HomePage>();
             Container.RegisterTypeForNavigation<SessionsPage>();
 
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            MobileCenter.Start("android=6f484fd0-7301-4362-8cdc-a9072d7858b1;" +
+                   "uwp={Your UWP App secret here};" +
+                   "ios={Your iOS App secret here}",
+                   typeof(Analytics), typeof(Crashes));
         }
     }
 }
