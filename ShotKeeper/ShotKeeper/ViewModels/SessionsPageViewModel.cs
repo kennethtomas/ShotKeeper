@@ -73,6 +73,7 @@ namespace ShotKeeper.ViewModels
                 param.Add("ShootingSessions", _shootingSessions);
                 param.Add("ShootingSession", shootingSession);
                 await _navigationService.NavigateAsync("ShotKeeperPage", param);
+                
             }
         }
 
@@ -100,6 +101,7 @@ namespace ShotKeeper.ViewModels
             param.Add("ShootingSessions", _shootingSessions);
             param.Add("ShootingSession", new ShootingSession() { ID = GetNextSessionID(), CreatedTime = DateTime.Now});
             await _navigationService.NavigateAsync("ShotKeeperPage", param);
+            
         }
 
         #region Methods
@@ -160,7 +162,7 @@ namespace ShotKeeper.ViewModels
 
         public void OnNavigatingTo(NavigationParameters parameters)
         {
-            
+              
         }
 
         #endregion

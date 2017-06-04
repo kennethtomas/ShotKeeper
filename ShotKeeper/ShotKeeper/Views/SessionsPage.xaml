@@ -44,13 +44,13 @@
             <DataTemplate>
                 <ViewCell>
                     <StackLayout Padding="10">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding CreatedTime, StringFormat='Created\: {0:d} {0:t}'}" Style="{DynamicResource ListItemTextStyle}" />
-                            <Label Text="{Binding LastModified, StringFormat='Last Modified\: {0:d} {0:t}'}" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        <StackLayout Orientation="Horizontal" >
+                            <Label Text="{Binding CreatedTime, StringFormat='Created\: {0:d} {0:t}'}" Style="{DynamicResource BodyStyle}" />
+                            <Label Text="{Binding LastModified, StringFormat='Last Modified\: {0:d} {0:t}'}" Style="{DynamicResource BodyStyle}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding TotalShotsCounted, StringFormat='Total Shots Counted\: {0}'}" Style="{DynamicResource ListItemDetailTextStyle}" />
-                            <Label Text="{Binding TotalShots, StringFormat='Total Shots\: {0}'}" Style="{DynamicResource ListItemDetailTextStyle}"/>
+                            <Label Text="{Binding TotalShotsCounted, StringFormat='Total Shots Counted\: {0}'}" Style="{DynamicResource CaptionStyle}" />
+                            <Label Text="{Binding TotalShots, StringFormat='Total Shots\: {0}'}" Style="{DynamicResource CaptionStyle}"/>
                         </StackLayout>
                     </StackLayout>
                 </ViewCell>

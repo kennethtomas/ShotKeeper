@@ -17,8 +17,8 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v5.1</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
@@ -184,6 +184,8 @@
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\ic_add_black_24dp.png" />
     <AndroidResource Include="Resources\drawable\ic_cancel_black_24dp.png" />
+    <AndroidResource Include="Resources\drawable\ic_add.png" />
+    <AndroidResource Include="Resources\drawable\ic_cancel.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShotKeeper\ShotKeeper.csproj">
