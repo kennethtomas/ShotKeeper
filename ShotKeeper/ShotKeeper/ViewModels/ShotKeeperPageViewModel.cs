@@ -68,20 +68,20 @@ namespace ShotKeeper.ViewModels
         {
             _navigationService = navigationService;
 
-            NumberOfFreeThrows = 0;
-            NumberOfMidRanges = 0;
-            NumberOfThreePointers = 0;
+            //NumberOfFreeThrows = 0;
+            //NumberOfMidRanges = 0;
+            //NumberOfThreePointers = 0;
 
-            NumberOfFreeThrowsCounted = 0;
-            NumberOfMidRangesCounted = 0;
-            NumberOfThreePointersCounted = 0;
+            //NumberOfFreeThrowsCounted = 0;
+            //NumberOfMidRangesCounted = 0;
+            //NumberOfThreePointersCounted = 0;
 
             SpeakEnabled = false;
 
-            UpdateValueFreeThrow();
-            UpdateValueMidRange();
-            UpdateValueThreePointers();
-            UpdateValueTotalShootingPercentage();
+            //UpdateValueFreeThrow();
+            //UpdateValueMidRange();
+            //UpdateValueThreePointers();
+            //UpdateValueTotalShootingPercentage();
 
             InitialiseCommands();
         }
@@ -93,41 +93,6 @@ namespace ShotKeeper.ViewModels
             ListenCommand = new DelegateCommand(OnListenCommand, CanListenCommand);
             SaveCommand = new DelegateCommand(OnSaveCommand, CanSaveCommand);
             CancelCommand = new DelegateCommand(OnCancelCommand, CanCancelCommand);
-        }
-
-        private bool CanCancelCommand()
-        {
-            return true;
-        }
-
-        private async void OnCancelCommand()
-        {
-            await _navigationService.GoBackAsync();
-        }
-
-        private bool CanSaveCommand()
-        {
-            return true;
-        }
-
-        private async void OnSaveCommand()
-        {
-            NavigationParameters param = new NavigationParameters();
-
-            var sesh = _shootingSessions.FirstOrDefault(i => i.ID == CurrentSession.ID);
-            if (null != sesh)
-            {
-                sesh.LastModified = DateTime.Now;   
-            }
-            else
-            {
-                CurrentSession.LastModified = DateTime.Now;
-                _shootingSessions.Add(CurrentSession);
-            }
-            
-            param.Add("ShootingSessions", _shootingSessions);
-
-            await _navigationService.NavigateAsync("SessionsPage", param);
         }
 
         #endregion
@@ -260,86 +225,92 @@ namespace ShotKeeper.ViewModels
 
         private void AddNumberOfFreeThrow()
         {
-            NumberOfFreeThrows++;
+            CurrentSession.NumberOfFreeThrows++;
             UpdateValueFreeThrow();
             UpdateValueTotalShootingPercentage();
         }
         private void AddNumberOfMidRanges()
         {
-            NumberOfMidRanges++;
+            CurrentSession.NumberOfFieldGoals++;
             UpdateValueMidRange();
             UpdateValueTotalShootingPercentage();
         }
         private void AddNumberOfThreePointers()
         {
-            NumberOfThreePointers++;
+            CurrentSession.NumberOfThreePointers++;
             UpdateValueThreePointers();
             UpdateValueTotalShootingPercentage();
         }
 
         private void AddNumberOfFreeThrowCounted()
         {
-            NumberOfFreeThrowsCounted++;
-            AddNumberOfFreeThrow();
+            CurrentSession.NumberOfFreeThrows++;
+            CurrentSession.NumberOfFreeThrowsCounted++;
+            UpdateValueFreeThrow();
+            UpdateValueTotalShootingPercentage();
         }
         private void AddNumberOfMidRangesCounted()
         {
-            NumberOfMidRangesCounted++;
-            AddNumberOfMidRanges();
+            CurrentSession.NumberOfFieldGoals++;
+            CurrentSession.NumberOfFieldGoalsCounted++;
+            UpdateValueMidRange();
+            UpdateValueTotalShootingPercentage();
         }
         private void AddNumberOfThreePointersCounted()
         {
-            NumberOfThreePointersCounted++;
-            AddNumberOfThreePointers();
+            CurrentSession.NumberOfThreePointers++;
+            CurrentSession.NumberOfThreePointersCounted++;
+            UpdateValueThreePointers();
+            UpdateValueTotalShootingPercentage();
         }
 
         private void RemoveNumberOfFreeThrow()
         {
-            if (NumberOfFreeThrows == NumberOfFreeThrowsCounted &&
-                NumberOfFreeThrows > 0)
+            if (CurrentSession.NumberOfFreeThrows == CurrentSession.NumberOfFreeThrowsCounted &&
+                CurrentSession.NumberOfFreeThrows > 0)
             {
-                NumberOfFreeThrows--;
-                NumberOfFreeThrowsCounted--;
+                CurrentSession.NumberOfFreeThrows--;
+                CurrentSession.NumberOfFreeThrowsCounted--;
                 UpdateValueFreeThrow();
                 UpdateValueTotalShootingPercentage();
             }
-            else if (NumberOfFreeThrows > 0)
+            else if (CurrentSession.NumberOfFreeThrows > 0)
             {
-                NumberOfFreeThrows--;
+                CurrentSession.NumberOfFreeThrows--;
                 UpdateValueFreeThrow();
                 UpdateValueTotalShootingPercentage();
             }
         }
         private void RemoveNumberOfMidRanges()
         {
-            if (NumberOfMidRanges == NumberOfMidRangesCounted &&
-                NumberOfMidRanges > 0)
+            if (CurrentSession.NumberOfFieldGoals == CurrentSession.NumberOfFieldGoalsCounted&&
+                CurrentSession.NumberOfFieldGoals > 0)
             {
-                NumberOfMidRanges--;
-                NumberOfThreePointersCounted--;
+                CurrentSession.NumberOfFieldGoals--;
+                CurrentSession.NumberOfFieldGoalsCounted--;
                 UpdateValueMidRange();
                 UpdateValueTotalShootingPercentage();
             }
-            else if (NumberOfMidRanges > 0)
+            else if (CurrentSession.NumberOfFieldGoals > 0)
             {
-                NumberOfMidRanges--;
+                CurrentSession.NumberOfFieldGoals--;
                 UpdateValueMidRange();
                 UpdateValueTotalShootingPercentage();
             }
         }
         private void RemoveNumberOfThreePointers()
         {
-            if (NumberOfThreePointers == NumberOfThreePointersCounted &&
-                NumberOfThreePointers > 0)
+            if (CurrentSession.NumberOfThreePointers == CurrentSession.NumberOfThreePointersCounted &&
+                CurrentSession.NumberOfThreePointers > 0)
             {
-                NumberOfThreePointers--;
-                NumberOfThreePointersCounted--;
+                CurrentSession.NumberOfThreePointers--;
+                CurrentSession.NumberOfThreePointersCounted--;
                 UpdateValueThreePointers();
                 UpdateValueTotalShootingPercentage();
             }
-            else if (NumberOfThreePointers > 0)
+            else if (CurrentSession.NumberOfThreePointers > 0)
             {
-                NumberOfThreePointers--;
+                CurrentSession.NumberOfThreePointers--;
                 UpdateValueThreePointers();
                 UpdateValueTotalShootingPercentage();
             }
@@ -347,25 +318,25 @@ namespace ShotKeeper.ViewModels
 
         private void RemoveNumberOfFreeThrowCounted()
         {
-            if (NumberOfFreeThrowsCounted > 0)
+            if (CurrentSession.NumberOfFreeThrowsCounted > 0)
             {
-                NumberOfFreeThrowsCounted--;
+                CurrentSession.NumberOfFreeThrowsCounted--;
                 RemoveNumberOfFreeThrow();
             }
         }
         private void RemoveNumberOfMidRangesCounted()
         {
-            if (NumberOfMidRangesCounted > 0)
+            if (CurrentSession.NumberOfFieldGoalsCounted> 0)
             {
-                NumberOfMidRangesCounted--;
+                CurrentSession.NumberOfFieldGoalsCounted--;
                 RemoveNumberOfMidRanges();
             }
         }
         private void RemoveNumberOfThreePointersCounted()
         {
-            if (NumberOfThreePointersCounted > 0)
+            if (CurrentSession.NumberOfThreePointersCounted > 0)
             {
-                NumberOfThreePointersCounted--;
+                CurrentSession.NumberOfThreePointersCounted--;
                 RemoveNumberOfThreePointers();
             }
         }
@@ -393,16 +364,16 @@ namespace ShotKeeper.ViewModels
         {
             int percentage = 0;
 
-            if (NumberOfMidRanges > 0)
+            if (_currentSession.NumberOfFieldGoals > 0)
             {
-                percentage = Convert.ToInt32((NumberOfMidRangesCounted / NumberOfMidRanges) * 100);
+                percentage = Convert.ToInt32((_currentSession.NumberOfFieldGoalsCounted / _currentSession.NumberOfFieldGoals) * 100);
             }
 
-            ValueMidRange = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfMidRangesCounted, NumberOfMidRanges);
+            ValueMidRange = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, _currentSession.NumberOfFieldGoalsCounted, _currentSession.NumberOfFieldGoals);
 
             if (SpeakEnabled)
             {
-                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfMidRangesCounted, NumberOfMidRanges, SPEECH_MID_RANGES_NAME));
+                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, _currentSession.NumberOfFieldGoalsCounted, _currentSession.NumberOfFieldGoals, SPEECH_MID_RANGES_NAME));
 
             }
         }
@@ -410,23 +381,23 @@ namespace ShotKeeper.ViewModels
         {
             int percentage = 0;
 
-            if (NumberOfThreePointers > 0)
+            if (_currentSession.NumberOfThreePointers > 0)
             {
-                percentage = Convert.ToInt32((NumberOfThreePointersCounted / NumberOfThreePointers) * 100);
+                percentage = Convert.ToInt32((_currentSession.NumberOfThreePointersCounted / _currentSession.NumberOfThreePointers) * 100);
             }
 
-            ValueThreePointers = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, NumberOfThreePointersCounted, NumberOfThreePointers);
+            ValueThreePointers = String.Format(OUT_PERCENTAGE_STRING_TEMPLATE, percentage, _currentSession.NumberOfThreePointersCounted, _currentSession.NumberOfThreePointers);
 
             if (SpeakEnabled)
             {
-                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, NumberOfThreePointersCounted, NumberOfThreePointers, SPEECH_THREE_POINTERS_NAME));
+                Speak(String.Format(SPEECH_RATIO_STRING_TEMPLATE, _currentSession.NumberOfThreePointersCounted, _currentSession.NumberOfThreePointers, SPEECH_THREE_POINTERS_NAME));
             }
         }
         private void UpdateValueTotalShootingPercentage()
         {
             int percentage = 0;
-            double totalShots = _numberOfFreeThrows + NumberOfMidRanges + NumberOfThreePointers;
-            double totalShotsCounted = NumberOfFreeThrowsCounted + NumberOfMidRangesCounted + NumberOfThreePointersCounted;
+            double totalShots = _currentSession.NumberOfFreeThrows + _currentSession.NumberOfFieldGoals + _currentSession.NumberOfThreePointers;
+            double totalShotsCounted = _currentSession.NumberOfFreeThrowsCounted + _currentSession.NumberOfFieldGoalsCounted + _currentSession.NumberOfThreePointersCounted;
 
             if (totalShots > 0)
             {
@@ -451,21 +422,37 @@ namespace ShotKeeper.ViewModels
             return true;
         }
 
+        private bool CanRemoveCommand(string arg)
+        {
+            return true;
+        }
+
+        private bool CanListenCommand()
+        {
+            return true;
+        }
+
+        private bool CanCancelCommand()
+        {
+            return true;
+        }
+
+        private bool CanSaveCommand()
+        {
+            return true;
+        }
+
         private void OnAddCommand(String obj)
         {
             switch (obj)
             {
                 case "CountedFreeThrow":
-                    CurrentSession.NumberOfFreeThrows++;
-                    CurrentSession.NumberOfFreeThrowsCounted++;
-                    UpdateValueFreeThrow();
+                    AddNumberOfFreeThrowCounted();
                     break;
                 case "FreeThrow":
-                    CurrentSession.NumberOfFreeThrows++;
                     AddNumberOfFreeThrow();
                     break;
                 case "CountedMidRange":
-                    ButtonIsEnabled = true;
                     AddNumberOfMidRangesCounted();
                     break;
                 case "MidRange":
@@ -478,17 +465,9 @@ namespace ShotKeeper.ViewModels
                     AddNumberOfThreePointers();
                     break;
             }
-
-            // Update views
-            UpdateValueTotalShootingPercentage();
-        }
-        
-        private bool CanRemoveCommand(string arg)
-        {
-            return true;
         }
 
-        private void OnRemoveCommand(string obj)
+        private void OnRemoveCommand(String obj)
         {
             switch (obj)
             {
@@ -513,14 +492,35 @@ namespace ShotKeeper.ViewModels
             }
         }
 
-        private bool CanListenCommand()
-        {
-            return true;
-        }
-
         private void OnListenCommand()
         {
             DependencyService.Get<ISpeechToText>().StartListening();
+        }
+
+
+        private async void OnCancelCommand()
+        {
+            await _navigationService.GoBackAsync();
+        }
+
+        private async void OnSaveCommand()
+        {
+            NavigationParameters param = new NavigationParameters();
+
+            var sesh = _shootingSessions.FirstOrDefault(i => i.ID == CurrentSession.ID);
+            if (null != sesh)
+            {
+                sesh.LastModified = DateTime.Now;
+            }
+            else
+            {
+                CurrentSession.LastModified = DateTime.Now;
+                _shootingSessions.Add(CurrentSession);
+            }
+
+            param.Add("ShootingSessions", _shootingSessions);
+
+            await _navigationService.NavigateAsync("SessionsPage", param);
         }
 
         #endregion
@@ -545,6 +545,11 @@ namespace ShotKeeper.ViewModels
             {
                 CurrentSession = shootingSesh;
             }
+
+            UpdateValueFreeThrow();
+            UpdateValueMidRange();
+            UpdateValueThreePointers();
+            UpdateValueTotalShootingPercentage();
         }
 
         public void OnNavigatingTo(NavigationParameters parameters)

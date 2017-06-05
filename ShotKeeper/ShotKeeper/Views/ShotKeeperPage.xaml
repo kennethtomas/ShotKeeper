@@ -73,7 +73,7 @@
         <!-- Percentage Labels -->
         
         <StackLayout  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-          <Label x:Name="ValueFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="{Binding CurrentSession.NumberOfFreeThrows}"/>
+          <Label x:Name="ValueFreeThrowPercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueFreeThrow}"/>
         </StackLayout>
         <StackLayout Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  VerticalOptions="Center" HorizontalOptions="Center">
           <Label x:Name="ValueMidRangePercentage" Style="{StaticResource plainLabel}"   Text="{Binding ValueMidRange}"/>
