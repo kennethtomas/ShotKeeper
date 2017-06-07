@@ -30,7 +30,7 @@ namespace ShotKeeper
         protected override void OnStart()
         {
             base.OnStart();
-            MobileCenter.Start("android=6f484fd0-7301-4362-8cdc-a9072d7858b1;" +
+            MobileCenter.Start("android=ecf7da19-2657-4192-b958-596960e69a79;" +
                    "uwp=f9c9684c-d213-45e1-8467-2be45fd9d3f1;" +
                    "ios=2b84b8cc-50cc-41c3-9897-ba6394316aa9",
                    typeof(Analytics), typeof(Crashes));
