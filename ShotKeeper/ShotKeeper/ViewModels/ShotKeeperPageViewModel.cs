@@ -34,14 +34,6 @@ namespace ShotKeeper.ViewModels
         private string _valueMidRange;
         private string _valueThreePointers;
 
-        private double _numberOfFreeThrows;
-        private double _numberOfMidRanges;
-        private double _numberOfThreePointers;
-
-        private double _numberOfFreeThrowsCounted;
-        private double _numberOfMidRangesCounted;
-        private double _numberOfThreePointersCounted;
-
         private bool _speakEnabled;
 
         private bool _buttonIsEnabled;
@@ -124,79 +116,6 @@ namespace ShotKeeper.ViewModels
         {
             get { return _valueThreePointers; }
             set { SetProperty(ref _valueThreePointers, value); }
-        }
-
-        public double NumberOfFreeThrows
-        {
-            get {
-                return _numberOfFreeThrows;
-            }
-
-            set
-            {
-                _numberOfFreeThrows = value;
-            }
-        }
-        public double NumberOfMidRanges
-        {
-            get
-            {
-                return _numberOfMidRanges;
-            }
-
-            set
-            {
-                _numberOfMidRanges = value;
-            }
-        }
-        public double NumberOfThreePointers
-        {
-            get
-            {
-                return _numberOfThreePointers;
-            }
-
-            set
-            {
-                _numberOfThreePointers = value;
-            }
-        }
-
-        public double NumberOfFreeThrowsCounted
-        {
-            get
-            {
-                return _numberOfFreeThrowsCounted;
-            }
-
-            set
-            {
-                _numberOfFreeThrowsCounted = value;
-            }
-        }
-        public double NumberOfMidRangesCounted
-        {
-            get
-            {
-                return _numberOfMidRangesCounted;
-            }
-
-            set
-            {
-                _numberOfMidRangesCounted = value;
-            }
-        }
-        public double NumberOfThreePointersCounted
-        {
-            get
-            {
-                return _numberOfThreePointersCounted;
-            }
-
-            set
-            {
-                _numberOfThreePointersCounted = value;
-            }
         }
 
         public bool SpeakEnabled
@@ -496,7 +415,6 @@ namespace ShotKeeper.ViewModels
         {
             DependencyService.Get<ISpeechToText>().StartListening();
         }
-
 
         private async void OnCancelCommand()
         {

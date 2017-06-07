@@ -12,40 +12,40 @@
         <Setter Property="BackgroundColor" Value="#eee"/>
         <Setter Property="TextColor" Value="Black" />
         <Setter Property="BorderRadius" Value="0"/>
-        <Setter Property="FontSize" Value="40" />
+        <Setter Property="FontSize" Value="Large" />
       </Style>
       <Style x:Key="plainLabel" TargetType="Label">
-        <Setter Property="FontSize" Value="50" />
+        <Setter Property="FontSize" Value="Small" />
         <Setter Property="VerticalOptions" Value="LayoutOptions.Center" />
       </Style>
       <Style x:Key="shotTypeLabel" TargetType="Label">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="Micro" />
         <Setter Property="VerticalOptions" Value="LayoutOptions.Center" />
       </Style>
     </ResourceDictionary>
   </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Save" Command="{Binding SaveCommand}" Order="Primary"/>
-        <ToolbarItem Name="Cancel" Command="{Binding CancelCommand}" Order="Primary"/>
+        <ToolbarItem Name="Save" Command="{Binding SaveCommand}" Order="Secondary"/>
+        <ToolbarItem Name="Cancel" Command="{Binding CancelCommand}" Order="Secondary"/>
     </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ScrollView>
       <Grid x:Name="controlGrid" RowSpacing="1" ColumnSpacing="5">
         <Grid.RowDefinitions>
-          <RowDefinition Height="*" /><!-- Total Shots Value -->
-          <RowDefinition Height="20" /><!-- Total Shots Label -->
-          <RowDefinition Height="*" /><!-- Add Buttons -->
-          <RowDefinition Height="*" /><!-- Shot Values -->
-          <RowDefinition Height="20" /><!-- Shot Labels -->
-          <RowDefinition Height="*" /><!-- Minus Buttons -->
+          <RowDefinition /><!-- Total Shots Value -->
+          <RowDefinition /><!-- Total Shots Label -->
+          <RowDefinition /><!-- Add Buttons -->
+          <RowDefinition /><!-- Shot Values -->
+          <RowDefinition /><!-- Shot Labels -->
+          <RowDefinition /><!-- Minus Buttons -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <!-- Total Shooting Percentage -->
