@@ -100,7 +100,7 @@ namespace ShotKeeper.ViewModels
             NavigationParameters param = new NavigationParameters();
             param.Add("ShootingSessions", _shootingSessions);
             param.Add("ShootingSession", new ShootingSession() { ID = GetNextSessionID(), CreatedTime = DateTime.Now});
-            await _navigationService.NavigateAsync("ShotKeeperPage", param);
+            await _navigationService.NavigateAsync("ShotKeeperCarouselPage", param);
             
         }
 

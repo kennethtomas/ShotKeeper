@@ -6,7 +6,7 @@
              x:Class="ShotKeeper.Views.SessionsPage"
              Title="Sessions">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="NEW" Command="{Binding AddCommand}" Order="Primary"/>
+        <ToolbarItem Text="NEW" Command="{Binding AddCommand}" Order="Secondary"/>
     </ContentPage.ToolbarItems>
     <ListView ItemsSource="{Binding ShootingSessionsGrouped}"
             SelectedItem="{Binding SelectedShootingSession, Mode=TwoWay}"

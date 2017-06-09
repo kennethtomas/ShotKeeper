@@ -25,6 +25,8 @@ namespace ShotKeeper
             Container.RegisterTypeForNavigation<HomePage>();
             Container.RegisterTypeForNavigation<SessionsPage>();
 
+            Container.RegisterTypeForNavigation<ShotKeeperCarouselPage>();
+            Container.RegisterTypeForNavigation<ShotKeeperPage1>();
         }
 
         protected override void OnStart()
