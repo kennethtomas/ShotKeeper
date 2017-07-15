@@ -51,8 +51,10 @@ namespace ShotKeeper.ViewModels
         {
             if (null != item)
             {
-                NavigationParameters p = new NavigationParameters();
-                p.Add("ID", item.ID);
+                NavigationParameters p = new NavigationParameters
+                {
+                    { "ID", item.ID }
+                };
                 await _navigationService.NavigateAsync("ShotKeeperPage", p);
             }
         }

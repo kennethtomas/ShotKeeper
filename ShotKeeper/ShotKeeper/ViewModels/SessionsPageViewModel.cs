@@ -69,9 +69,11 @@ namespace ShotKeeper.ViewModels
         {
             if (null != shootingSession)
             {
-                NavigationParameters param = new NavigationParameters();
-                param.Add("ShootingSessions", _shootingSessions);
-                param.Add("ShootingSession", shootingSession);
+                NavigationParameters param = new NavigationParameters
+                {
+                    { "ShootingSessions", _shootingSessions },
+                    { "ShootingSession", shootingSession }
+                };
                 await _navigationService.NavigateAsync("ShotKeeperPage", param);
                 
             }
@@ -97,9 +99,11 @@ namespace ShotKeeper.ViewModels
 
         private async void OnAdd()
         {
-            NavigationParameters param = new NavigationParameters();
-            param.Add("ShootingSessions", _shootingSessions);
-            param.Add("ShootingSession", new ShootingSession() { ID = GetNextSessionID(), CreatedTime = DateTime.Now});
+            NavigationParameters param = new NavigationParameters
+            {
+                { "ShootingSessions", _shootingSessions },
+                { "ShootingSession", new ShootingSession() { ID = GetNextSessionID(), CreatedTime = DateTime.Now } }
+            };
             await _navigationService.NavigateAsync("ShotKeeperCarouselPage", param);
             
         }
@@ -141,8 +145,7 @@ namespace ShotKeeper.ViewModels
         {
             if (parameters.ContainsKey("ShootingSessions"))
             {
-                ObservableCollection<ShootingSession> shootingSesh;   
-                if (parameters.TryGetValue("ShootingSessions", out shootingSesh))
+                if (parameters.TryGetValue("ShootingSessions", out ObservableCollection<ShootingSession> shootingSesh))
                 {
                     _shootingSessions = shootingSesh;
                 }

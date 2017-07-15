@@ -447,8 +447,7 @@ namespace ShotKeeper.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            ShootingSession shootingSesh;
-            if (parameters.TryGetValue("ShootingSession", out shootingSesh))
+            if (parameters.TryGetValue("ShootingSession", out ShootingSession shootingSesh))
             {
                 CurrentSession = shootingSesh;
             }

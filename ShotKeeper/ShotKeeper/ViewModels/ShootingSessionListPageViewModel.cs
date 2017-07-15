@@ -73,8 +73,10 @@ namespace ShotKeeper.ViewModels
 
         private async void OnShootingSessionSelected(ShootingSession sesh)
         {
-            NavigationParameters param = new NavigationParameters();
-            param.Add("ShootingSession", sesh);
+            NavigationParameters param = new NavigationParameters
+            {
+                { "ShootingSession", sesh }
+            };
             await _navigationService.NavigateAsync("ShootingSessionPage", param);
         }
 
