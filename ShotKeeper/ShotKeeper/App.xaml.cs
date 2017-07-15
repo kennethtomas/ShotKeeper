@@ -5,6 +5,8 @@ using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
 using ShotKeeper.Models;
+using ShotKeeper.Interfaces;
+using Xamarin.Forms.Xaml;
 
 namespace ShotKeeper
 {
@@ -18,7 +20,7 @@ namespace ShotKeeper
         {
             InitializeComponent();
 
-            NavigationService.NavigateAsync("NavigationPage/SessionsPage");
+            NavigationService.NavigateAsync("NavigationPage/ShootingSessionListPage");
         }
 
         public static ShootingSessionDatabase Database
@@ -26,7 +28,9 @@ namespace ShotKeeper
             get
             {
                 if (database == null)
-                { }
+                {
+                    database = new ShootingSessionDatabase(DependencyService.Get<IFileHelper>().GetLocalFilePath("ShootingSessionSQLite.db3"));
+                }
                 return database;
             }
         }
@@ -34,13 +38,15 @@ namespace ShotKeeper
         protected override void RegisterTypes()
         {
             Container.RegisterTypeForNavigation<NavigationPage>();
-            Container.RegisterTypeForNavigation<ShotKeeperPage>();
+            Container.RegisterTypeForNavigation<ShootingSessionPage>();
             Container.RegisterTypeForNavigation<HomePage>();
             Container.RegisterTypeForNavigation<SessionsPage>();
 
             Container.RegisterTypeForNavigation<ShotKeeperCarouselPage>();
             Container.RegisterTypeForNavigation<ShotKeeperPage1>();
             Container.RegisterTypeForNavigation<ShootingSessionListPage>();
+
+            Container.RegisterTypeForNavigation<ShootingSessionPage>();
         }
 
         protected override void OnStart()

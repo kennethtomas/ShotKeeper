@@ -75,6 +75,8 @@ namespace ShotKeeper.ViewModels
             //UpdateValueThreePointers();
             //UpdateValueTotalShootingPercentage();
 
+            CurrentSession = new ShootingSession();
+
             InitialiseCommands();
         }
 
@@ -423,25 +425,15 @@ namespace ShotKeeper.ViewModels
 
         private async void OnSaveCommand()
         {
-            NavigationParameters param = new NavigationParameters();
-
-            var sesh = _shootingSessions.FirstOrDefault(i => i.ID == CurrentSession.ID);
-            if (null != sesh)
+            if (CurrentSession.CreatedTime == default(DateTime))
             {
-                sesh.LastModified = DateTime.Now;
-            }
-            else
-            {
-                CurrentSession.LastModified = DateTime.Now;
-                _shootingSessions.Add(CurrentSession);
+                CurrentSession.CreatedTime = DateTime.Now;
             }
 
-            //var shootingSession = _shootingSessions;
-            await App.Database.SaveItemAsync(sesh);
+            CurrentSession.LastModified = DateTime.Now;
+
+            await App.Database.SaveItemAsync(CurrentSession);
             await _navigationService.GoBackAsync();
-
-            //param.Add("ShootingSessions", _shootingSessions);
-            //await _navigationService.NavigateAsync("SessionsPage", param);
         }
 
         #endregion
@@ -455,16 +447,14 @@ namespace ShotKeeper.ViewModels
 
         public void OnNavigatedTo(NavigationParameters parameters)
         {
-            ObservableCollection<ShootingSession> shootingSeshs;
-            if (parameters.TryGetValue("ShootingSessions", out shootingSeshs))
-            {
-                _shootingSessions = shootingSeshs;
-            }
-
             ShootingSession shootingSesh;
             if (parameters.TryGetValue("ShootingSession", out shootingSesh))
             {
                 CurrentSession = shootingSesh;
+            }
+            else
+            {
+                CurrentSession = new ShootingSession();
             }
 
             UpdateValueFreeThrow();

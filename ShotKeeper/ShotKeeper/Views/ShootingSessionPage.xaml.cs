@@ -2,9 +2,9 @@
 
 namespace ShotKeeper.Views
 {
-    public partial class ShotKeeperPage : ContentPage
+    public partial class ShootingSessionPage : ContentPage
     {
-        public ShotKeeperPage()
+        public ShootingSessionPage()
         {
             InitializeComponent();
         }

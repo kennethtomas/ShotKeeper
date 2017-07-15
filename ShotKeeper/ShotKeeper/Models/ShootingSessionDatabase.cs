@@ -22,15 +22,10 @@ namespace ShotKeeper.Models
         {
             return database.Table<ShootingSession>().ToListAsync();
         }
-
-        public Task<List<ShootingSession>> GetItemsNotDoneAsync()
-        {
-            return database.QueryAsync<ShootingSession>("SELECT * FROM [ShootingSession] WHERE [Done] = 0");
-        }
-
+        
         public Task<List<ShootingSession>> GetAllItemsForListDisplayAsync()
         {
-            return database.QueryAsync<ShootingSession>("SELECT * FROM [ShootingSession] WHERE [Done] = 0");
+            return database.QueryAsync<ShootingSession>("SELECT * FROM [ShootingSession]");
         }
 
         public Task<ShootingSession> GetItemAsync(int id)
