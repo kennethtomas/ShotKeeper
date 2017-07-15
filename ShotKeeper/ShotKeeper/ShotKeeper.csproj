@@ -40,8 +40,10 @@
     <Compile Include="Models\Grouping.cs" />
     <Compile Include="Models\MainPageListItem.cs" />
     <Compile Include="Models\ShootingSession.cs" />
+    <Compile Include="Models\ShootingSessionDatabase.cs" />
     <Compile Include="Models\ShotKeeper.cs" />
     <Compile Include="ViewModels\SessionsPageViewModel.cs" />
+    <Compile Include="ViewModels\ShootingSessionListPageViewModel.cs" />
     <Compile Include="ViewModels\ShotKeeperCarouselPageViewModel.cs" />
     <Compile Include="ViewModels\ShotKeeperPage1ViewModel.cs" />
     <Compile Include="Views\HomePage.xaml.cs">
@@ -52,7 +54,10 @@
     <Compile Include="Interfaces\ITextToSpeech.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
-    <Compile Include="ViewModels\ShotKeeperPageViewModel.cs" />
+    <Compile Include="ViewModels\ShootingSessionPageViewModel.cs" />
+    <Compile Include="Views\ShootingSessionListPage.xaml.cs">
+      <DependentUpon>ShootingSessionListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShotKeeperPage1.xaml.cs">
       <DependentUpon>ShotKeeperPage1.xaml</DependentUpon>
     </Compile>
@@ -67,7 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\ShotKeeperPage.xaml">
+    <EmbeddedResource Include="Views\ShootingSessionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -77,8 +82,8 @@
     <Compile Include="Views\ShotKeeperCarouselPage.xaml.cs">
       <DependentUpon>ShotKeeperCarouselPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShotKeeperPage.xaml.cs">
-      <DependentUpon>ShotKeeperPage.xaml</DependentUpon>
+    <Compile Include="Views\ShootingSessionPage.xaml.cs">
+      <DependentUpon>ShootingSessionPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ShotKeeperPage1.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ShootingSessionListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

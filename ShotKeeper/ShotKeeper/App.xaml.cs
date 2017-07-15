@@ -4,18 +4,31 @@ using Xamarin.Forms;
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
+using ShotKeeper.Models;
 
 namespace ShotKeeper
 {
     public partial class App : PrismApplication
     {
+        static ShootingSessionDatabase database;
+
         public App(IPlatformInitializer initializer = null) : base(initializer) { }
 
         protected override void OnInitialized()
         {
             InitializeComponent();
-            
+
             NavigationService.NavigateAsync("NavigationPage/SessionsPage");
+        }
+
+        public static ShootingSessionDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                { }
+                return database;
+            }
         }
 
         protected override void RegisterTypes()
@@ -27,6 +40,7 @@ namespace ShotKeeper
 
             Container.RegisterTypeForNavigation<ShotKeeperCarouselPage>();
             Container.RegisterTypeForNavigation<ShotKeeperPage1>();
+            Container.RegisterTypeForNavigation<ShootingSessionListPage>();
         }
 
         protected override void OnStart()

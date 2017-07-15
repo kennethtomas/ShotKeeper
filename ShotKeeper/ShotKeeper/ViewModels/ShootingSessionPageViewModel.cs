@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace ShotKeeper.ViewModels
 {
-    public class ShotKeeperPageViewModel : BindableBase, INavigationAware
+    public class ShootingSessionPageViewModel : BindableBase, INavigationAware
     {
         #region Constants
 
@@ -56,7 +56,7 @@ namespace ShotKeeper.ViewModels
 
         #region Constructors
 
-        public ShotKeeperPageViewModel(INavigationService navigationService)
+        public ShootingSessionPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
 
@@ -436,9 +436,12 @@ namespace ShotKeeper.ViewModels
                 _shootingSessions.Add(CurrentSession);
             }
 
-            param.Add("ShootingSessions", _shootingSessions);
+            //var shootingSession = _shootingSessions;
+            await App.Database.SaveItemAsync(sesh);
+            await _navigationService.GoBackAsync();
 
-            await _navigationService.NavigateAsync("SessionsPage", param);
+            //param.Add("ShootingSessions", _shootingSessions);
+            //await _navigationService.NavigateAsync("SessionsPage", param);
         }
 
         #endregion

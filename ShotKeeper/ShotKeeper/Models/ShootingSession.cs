@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using ShotKeeper.Interfaces;
+using SQLite;
 
 namespace ShotKeeper.Models
 {
@@ -24,6 +25,13 @@ namespace ShotKeeper.Models
         #endregion
 
         #region Properties
+
+        [PrimaryKey, AutoIncrement]
+        public int ID
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
 
         public double NumberOfFreeThrows
         {
@@ -133,12 +141,6 @@ namespace ShotKeeper.Models
         {
             get { return _lastModified; }
             set { SetProperty(ref _lastModified, value); }
-        }
-
-        public int ID
-        {
-            get { return _id; }
-            set { SetProperty(ref _id, value); }
         }
 
         #endregion

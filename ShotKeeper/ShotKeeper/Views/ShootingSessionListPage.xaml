@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="ShotKeeper.Views.ShootingSessionListPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="+" Command="{Binding AddCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Title" FontSize="Large" Grid.Row="0" Grid.Column="0"/>
+            <ListView x:Name="listView" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ShootingSessionsList}" SelectedItem="{Binding SelectedShootingSession}" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Delete" Command="{Binding DeleteCommand}" />
+                            </ViewCell.ContextActions>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" FontSize="Large"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Last Modified: " FontAttributes="Italic"/>
+                                    <Label Text="{Binding LastModified}" FontAttributes="Italic"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

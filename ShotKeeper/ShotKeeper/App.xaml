@@ -5,14 +5,20 @@
                         x:Class="ShotKeeper.App">
   <Application.Resources>
     <ResourceDictionary>
-      <Style x:Key="buttonStyle" TargetType="Button">
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        <Setter Property="BorderColor" Value="Lime" />
-        <Setter Property="BorderRadius" Value="5" />
-        <Setter Property="BorderWidth" Value="5" />
-        <Setter Property="WidthRequest" Value="200" />
-        <Setter Property="TextColor" Value="Teal" />
+      <Style x:Key="MediumButtonStyle" TargetType="Button">
+        <Setter  Property="FontSize" Value="75" />
+      </Style>
+      <Style x:Key="SmallButtonStyle" TargetType="Button">
+        <Setter  Property="FontSize" Value="20" />
+      </Style>
+      <Style x:Key="LargeFontStyle" TargetType="Label">
+        <Setter  Property="FontSize" Value="110" />
+      </Style>
+      <Style x:Key="MediumFontStyle" TargetType="Label">
+        <Setter  Property="FontSize" Value="60" />
+      </Style>
+      <Style x:Key="SmallFontStyle" TargetType="Label">
+        <Setter  Property="FontSize" Value="55" />
       </Style>
     </ResourceDictionary>
   </Application.Resources>

@@ -5,6 +5,48 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="ShotKeeper.Views.ShotKeeperPage1">
 
-    <Label Text="SHOT KEEPER PAGE !!!!" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Save" Command="{Binding SaveCommand}" Order="Secondary"/>
+        <ToolbarItem Name="Cancel" Command="{Binding CancelCommand}" Order="Secondary"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="ScoresDisplay" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <!-- Score Display -->
+            <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                <Label Text="100%" Style="{StaticResource LargeFontStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout x:Name="ScoresBreakdown" Orientation="Horizontal">
+                    <Label x:Name="FreeThrows" Text="100%"    Style="{StaticResource MediumFontStyle}"/>
+                    <Label x:Name="FieldGoals" Text="200%"    Style="{StaticResource MediumFontStyle}"/>
+                    <Label x:Name="ThreePointers" Text="300%" Style="{StaticResource MediumFontStyle}"/>
+                </StackLayout>
+            </StackLayout>
 
+            <!-- Shot type selection -->
+            <StackLayout x:Name="ShotTypesList" Orientation="Horizontal">
+                <Button Text="Free Throw"       Style="{StaticResource SmallButtonStyle}"/>
+                <Button Text="Field Goal"       Style="{StaticResource SmallButtonStyle}"/>
+                <Button Text="Three Pointer"    Style="{StaticResource SmallButtonStyle}"/>
+            </StackLayout>
+        
+            <!-- Score Controls -->
+            <StackLayout x:Name="ShotControl" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <StackLayout x:Name="CountedControls">
+                    <Button Text="+" Style="{StaticResource MediumButtonStyle}"/>
+                    <Button Text="-" Style="{StaticResource MediumButtonStyle}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Label Text="30%" HorizontalOptions="Center" Style="{StaticResource SmallFontStyle}"/>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+                        <Label Text="40"    Style="{StaticResource SmallFontStyle}"/>
+                        <Label Text="/"     Style="{StaticResource SmallFontStyle}"/>
+                        <Label Text="30"    Style="{StaticResource SmallFontStyle}"/>
+                    </StackLayout>                
+                </StackLayout>
+                <StackLayout x:Name="MissedControls">
+                    <Button Text="+" Style="{StaticResource MediumButtonStyle}"/>
+                    <Button Text="-" Style="{StaticResource MediumButtonStyle}"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
