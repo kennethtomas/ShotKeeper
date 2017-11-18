@@ -16,13 +16,35 @@
                         <ViewCell.ContextActions>
                             <MenuItem Text="Delete" Command="{Binding DeleteCommand}" />
                         </ViewCell.ContextActions>
-                        <StackLayout>
-                            <Label Text="{Binding ID}" FontSize="Large"/>
+                        <StackLayout Padding="10">
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="TotalShots: " FontAttributes="Italic"/>
-                                <Label Text="{Binding TotalShotsCounted}" FontAttributes="Italic"/>
-                                <Label Text="/" FontAttributes="Italic"/>
-                                <Label Text="{Binding TotalShots}" FontAttributes="Italic"/>
+                                <Label Text="[" FontSize="Large"/>
+                                <Label Text="{Binding ID}" FontSize="Large"/>
+                                <Label Text="]" FontSize="Large"/>
+                                <Label Text="Total: " FontSize="Large" FontAttributes="Italic"/>
+                                <Label Text="{Binding TotalShotsCounted}" FontSize="Large" FontAttributes="Italic"/>
+                                <Label Text="/" FontSize="Large" FontAttributes="Italic"/>
+                                <Label Text="{Binding TotalShots}" FontSize="Large" FontAttributes="Italic"/>
+
+                                <Label Text="(" FontSize="Default"/>
+                                <Label Text="FT: " FontSize="Default"/>
+                                <Label Text="{Binding NumberOfFreeThrowsCounted}" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="/" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="{Binding NumberOfFreeThrows}" FontSize="Default" FontAttributes="Italic"/>
+
+                                <Label Text=" FG: " FontSize="Default"/>
+                                <Label Text="{Binding NumberOfFieldGoalsCounted}" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="/" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="{Binding NumberOfFieldGoals}" FontSize="Default" FontAttributes="Italic"/>
+
+                                <Label Text=" 3PT: " FontSize="Default"/>
+                                <Label Text="{Binding NumberOfThreePointersCounted}" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="/" FontSize="Default" FontAttributes="Italic"/>
+                                <Label Text="{Binding NumberOfThreePointers}" FontSize="Default" FontAttributes="Italic"/>
+
+                                <Label Text=")" FontSize="Default"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
                                 <Label Text="Last Modified: " FontAttributes="Italic"/>
                                 <Label Text="{Binding LastModified}" FontAttributes="Italic"/>
                             </StackLayout>

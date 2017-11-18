@@ -59,7 +59,7 @@ namespace ShotKeeper.ViewModels
 
         #endregion
 
-        #region Event Handlers
+        #region Event Handlers \
 
         private async void OnNewCommand()
         {

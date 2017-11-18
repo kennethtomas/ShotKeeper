@@ -39,7 +39,6 @@ namespace ShotKeeper
         {
             Container.RegisterTypeForNavigation<NavigationPage>();
             Container.RegisterTypeForNavigation<ShootingSessionPage>();
-            Container.RegisterTypeForNavigation<HomePage>();
             Container.RegisterTypeForNavigation<SessionsPage>();
 
             Container.RegisterTypeForNavigation<ShotKeeperCarouselPage>();
